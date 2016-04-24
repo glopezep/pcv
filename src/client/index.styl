@@ -1,28 +1,18 @@
 @import "nib"
 @import "util/utils"
+@import "header/index"
+@import "user/index"
+@import "nav/index"
+@import "landing/index"
+@import "cover-letter/index"
+@import "stats/index"
+@import "educations/index"
+@import "skills/index"
+@import "projects/index"
+@import "experiences/index"
+@import "footer/index"
 
-$colorGray95 = #4A4A49
 
 body
   font-size 16px
-
-.Header
-  background $colorGray95
-  color white
-  height 70px
-  &-button
-    font-size 2em
-    text-decoration none
-    color white
-
-  &-container
-    display flex
-    justify-content space-between
-    align-items center
-    height 100%
-
-.User
-  display flex
-  align-items center
-  &-name
-    margin-right .5em
+  overflow-x hidden
