@@ -1,0 +1,23 @@
+.Header
+  background $colorGray95
+  color white
+  height 70px
+  transition all .3s ease
+  &.is-fixed
+    position fixed
+    width 100vw
+    z-index 11
+
+    .Header-button
+      display none
+
+  &-button
+    font-size 2em
+    text-decoration none
+    color white
+
+  &-container
+    display flex
+    justify-content space-between
+    align-items center
+    height 100%
