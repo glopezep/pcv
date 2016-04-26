@@ -1,8 +1,9 @@
 import mongoose, { Schema } from 'mongoose'
+import User from './user'
 
 var CvSchema = new Schema({
   cvName: String,
-  userId: Schema.Types.ObjectId
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 })
 
 var model = mongoose.moel('Cv', CvSchema)

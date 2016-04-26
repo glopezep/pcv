@@ -3,13 +3,15 @@ import Hammer from 'hammerjs'
 import { changeState } from '../lib'
 
 var $nav = $('.Nav')
-var $appContainer = $('.App-container')
+var mainPanel = document.getElementById('App-container')
 
-var hammerPanel = new Hammer($appContainer)
-var sidePanel = new Hammer($nav)
+var hammerPanel = new Hammer(mainPanel)
 
-hammerPanel.on('swiperight', () => {
-  changeState(null, sidePanel)
+hammerPanel.on('swiperight', function (ev) {
+  changeState(ev, $nav)
 })
 
+hammerPanel.on('swipeleft', function (ev) {
+  if ($nav.hasClass('is-active')) $nav.removeClass('is-active')
+})
 export default $nav
