@@ -12577,15 +12577,17 @@ var _lib = require('../lib');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var $nav = (0, _jquery2.default)('.Nav');
-var $appContainer = (0, _jquery2.default)('.App-container');
+var mainPanel = document.getElementById('App-container');
 
-var hammerPanel = new _hammerjs2.default($appContainer);
-var sidePanel = new _hammerjs2.default($nav);
+var hammerPanel = new _hammerjs2.default(mainPanel);
 
-hammerPanel.on('swiperight', function () {
-  (0, _lib.changeState)(null, sidePanel);
+hammerPanel.on('swiperight', function (ev) {
+  (0, _lib.changeState)(ev, $nav);
 });
 
+hammerPanel.on('swipeleft', function (ev) {
+  if ($nav.hasClass('is-active')) $nav.removeClass('is-active');
+});
 exports.default = $nav;
 
 },{"../lib":5,"hammerjs":1,"jquery":2}],7:[function(require,module,exports){
