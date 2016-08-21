@@ -2645,7 +2645,7 @@ if (typeof define === 'function' && define.amd) {
 
 },{}],2:[function(require,module,exports){
 /*!
- * jQuery JavaScript Library v2.2.3
+ * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -2655,7 +2655,7 @@ if (typeof define === 'function' && define.amd) {
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2016-04-05T19:26Z
+ * Date: 2016-05-20T17:23Z
  */
 
 (function( global, factory ) {
@@ -2711,7 +2711,7 @@ var support = {};
 
 
 var
-	version = "2.2.3",
+	version = "2.2.4",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -7652,13 +7652,14 @@ jQuery.Event.prototype = {
 	isDefaultPrevented: returnFalse,
 	isPropagationStopped: returnFalse,
 	isImmediatePropagationStopped: returnFalse,
+	isSimulated: false,
 
 	preventDefault: function() {
 		var e = this.originalEvent;
 
 		this.isDefaultPrevented = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.preventDefault();
 		}
 	},
@@ -7667,7 +7668,7 @@ jQuery.Event.prototype = {
 
 		this.isPropagationStopped = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.stopPropagation();
 		}
 	},
@@ -7676,7 +7677,7 @@ jQuery.Event.prototype = {
 
 		this.isImmediatePropagationStopped = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.stopImmediatePropagation();
 		}
 
@@ -8606,19 +8607,6 @@ function getWidthOrHeight( elem, name, extra ) {
 		val = name === "width" ? elem.offsetWidth : elem.offsetHeight,
 		styles = getStyles( elem ),
 		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
-
-	// Support: IE11 only
-	// In IE 11 fullscreen elements inside of an iframe have
-	// 100x too small dimensions (gh-1764).
-	if ( document.msFullscreenElement && window.top !== window ) {
-
-		// Support: IE11 only
-		// Running getBoundingClientRect on a disconnected node
-		// in IE throws an error.
-		if ( elem.getClientRects().length ) {
-			val = Math.round( elem.getBoundingClientRect()[ name ] * 100 );
-		}
-	}
 
 	// Some non-html elements return undefined for offsetWidth, so check for null/undefined
 	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
@@ -10510,6 +10498,7 @@ jQuery.extend( jQuery.event, {
 	},
 
 	// Piggyback on a donor event to simulate a different one
+	// Used only for `focus(in | out)` events
 	simulate: function( type, elem, event ) {
 		var e = jQuery.extend(
 			new jQuery.Event(),
@@ -10517,27 +10506,10 @@ jQuery.extend( jQuery.event, {
 			{
 				type: type,
 				isSimulated: true
-
-				// Previously, `originalEvent: {}` was set here, so stopPropagation call
-				// would not be triggered on donor event, since in our own
-				// jQuery.event.stopPropagation function we had a check for existence of
-				// originalEvent.stopPropagation method, so, consequently it would be a noop.
-				//
-				// But now, this "simulate" function is used only for events
-				// for which stopPropagation() is noop, so there is no need for that anymore.
-				//
-				// For the 1.x branch though, guard for "click" and "submit"
-				// events is still used, but was moved to jQuery.event.stopPropagation function
-				// because `originalEvent` should point to the original event for the constancy
-				// with other events and for more focused logic
 			}
 		);
 
 		jQuery.event.trigger( e, null, elem );
-
-		if ( e.isDefaultPrevented() ) {
-			event.preventDefault();
-		}
 	}
 
 } );
@@ -12494,6 +12466,30 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var $educationsList = (0, _jquery2.default)('.Educations-list');
+
+var educations = [{ title: 'High School', location: 'Colegio Espiritu Santo' }, { title: 'software engineering', location: 'UNAPEC - Cursando' }, { title: 'Frontend Developer', location: 'Platzi' }, { title: 'Backend Developer', location: 'Platzi' }];
+
+function render(educations) {
+  var html = '';
+  educations.forEach(function (education) {
+    var template = '\n      <li class="Education">\n        <div class="Education-left"><span class="Education-icon icon-study"></span></div>\n        <div class="Education-right">\n          <h4 class="Education-title">' + education.title + '</h4>\n          <span class="Education-location">' + education.location + '</span>\n        </div>\n      </li>';
+    html += template;
+  });
+  return html;
+}
+
+$educationsList.html(render(educations));
+
+},{"jquery":2}],4:[function(require,module,exports){
+'use strict';
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 var _nav = require('../nav');
 
 var _nav2 = _interopRequireDefault(_nav);
@@ -12516,24 +12512,20 @@ $headerButton.on('click', function (ev) {
   (0, _lib.changeState)(ev, _nav2.default);
 });
 
-},{"../lib":5,"../nav":6,"jquery":2}],4:[function(require,module,exports){
+},{"../lib":6,"../nav":7,"jquery":2}],5:[function(require,module,exports){
 'use strict';
 
-var _header = require('./header');
+require('./header');
 
-var _header2 = _interopRequireDefault(_header);
+require('./nav');
 
-var _nav = require('./nav');
+require('./projects');
 
-var _nav2 = _interopRequireDefault(_nav);
+require('./skills');
 
-var _projects = require('./projects');
+require('./educations');
 
-var _projects2 = _interopRequireDefault(_projects);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-},{"./header":3,"./nav":6,"./projects":7}],5:[function(require,module,exports){
+},{"./educations":3,"./header":4,"./nav":7,"./projects":8,"./skills":9}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12557,7 +12549,7 @@ function onScroll(ev, element) {
   if (window.scrollY >= 380) (0, _jquery2.default)(element).addClass('is-fixed');else (0, _jquery2.default)(element).removeClass('is-fixed');
 }
 
-},{"jquery":2}],6:[function(require,module,exports){
+},{"jquery":2}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12590,7 +12582,7 @@ hammerPanel.on('swipeleft', function (ev) {
 });
 exports.default = $nav;
 
-},{"../lib":5,"hammerjs":1,"jquery":2}],7:[function(require,module,exports){
+},{"../lib":6,"hammerjs":1,"jquery":2}],8:[function(require,module,exports){
 'use strict';
 
 var _jquery = require('jquery');
@@ -12601,11 +12593,65 @@ var _lib = require('../lib');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var $projectList = (0, _jquery2.default)('.Projects-list');
 var $project = (0, _jquery2.default)('.Project');
 var $projectInfo = $project.find('Project-bottom');
 
-$project.on('click', function (ev) {
+var projects = [{ title: 'Partido MODA', description: 'Website con conexion a api de Wordpress', link: 'partido-moda' }, { title: 'RkCreativa', description: 'Pagina web simple para empresa RkCreativa', link: 'rakcreativa' }, { title: 'Classiccars', description: 'Ejemplo de una Single Page App', link: 'classiccars.nyc' }, { title: 'SpiritRO', description: 'Simple maquetacion de una Landing Page', link: 'spiritro' }, { title: 'Carvis', description: 'Website para empresa Carvis', link: 'carvis' }, { title: 'Cafap', description: 'App open source con ReactJS para automatizar Cafeterias', link: 'cafapp' }];
+
+$projectList.on('click', '.Project', function (ev) {
   (0, _lib.changeState)(ev, this.children[1]);
 });
 
-},{"../lib":5,"jquery":2}]},{},[4]);
+function checkLink(project) {
+  if (project.link == 'cafapp') return '<a style=\'color:white;\' href=\'http://www.github.com/glopezep/' + project.link + '\' target=\'_blank\'>Ver Repositorio</a>';
+  return '<a style=\'color:white;\' href=\'http://www.glopezep.github.io/' + project.link + '\' target=\'_blank\'>Ver en Github Pages</a>';
+}
+
+function render(projects) {
+  var html = '';
+
+  projects.forEach(function (project) {
+    var template = '\n      <li class=\'Project\'>\n        <div class=\'Project-imageContainer\'></div>\n        <div class=\'Project-bottom\'>\n          <h4 class=\'Project-title\'>' + project.title + '</h4>\n          <p Project-description>' + project.description + '</p>\n          ' + checkLink(project) + '\n        </div>\n      </li>';
+    html += template;
+  });
+  return html;
+}
+
+$projectList.html(render(projects));
+
+},{"../lib":6,"jquery":2}],9:[function(require,module,exports){
+'use strict';
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var $skills = (0, _jquery2.default)('.Skills-list');
+
+var skills = [{ name: 'HTML5', level: 100 }, { name: 'CCS3', level: 100 }, { name: 'Responsive Design', level: 80 }, { name: 'Jade', level: 90 }, { name: 'Stylus', level: 90 }, { name: 'Sass', level: 90 }, { name: 'JavaScript', level: 90 }, { name: 'ReactJS', level: 80 }, { name: 'Redux', level: 70 }, { name: 'AngularJS', level: 50 }, { name: 'Backbone', level: 50 }, { name: 'NodeJS', level: 80 }, { name: 'MongoDB', level: 80 }, { name: 'Browserify', level: 90 }, { name: 'Babel', level: 90 }, { name: 'Java', level: 50 }];
+
+var colors = {
+  green: '#02d610',
+  orange: '#FFA077',
+  red: '#ff0000'
+};
+
+function checkLevel(level) {
+  if (level >= 80) return colors.green;else if (level >= 60 && level <= 79) return colors.orange;else return colors.red;
+}
+
+function render(skills) {
+  var html = '';
+  skills.forEach(function (skill) {
+    var template = '<li style=\'border-bottom-color:' + checkLevel(skill.level) + '\' class=\'Skill\'>\n      <div class=\'Skill-left\'><span style=\'color:' + checkLevel(skill.level) + '\' class=\'Skill-value\'>' + skill.name + '</div>\n      <div class=\'Skill-right\'><span style=\'color:' + checkLevel(skill.level) + '\' class=\'Skill-value\'>' + skill.level + '</span></div>\n    </li>';
+    html += template;
+  });
+  return html;
+}
+
+$skills.html(render(skills));
+
+},{"jquery":2}]},{},[5]);
