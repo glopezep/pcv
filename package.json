@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "jade": "NODE_PATH=. jade --watch --pretty src/client/index.jade --out public",
-    "styl": "NODE_PATH=. stylus --use nib --compress --watch src/client/index.styl --out public",
-    "build": "NODE_PATH=. browserify -t [ babelify --presets [ es2015 ] ] src/client/index.js > public/index.js",
+    "jade": "jade --watch --pretty src/client/index.jade --out public",
+    "styl": "stylus --use nib --compress --watch src/client/index.styl --out public",
+    "build": "browserify -t [ babelify --presets [ es2015 ] ] src/client/index.js > public/index.js",
     "dist": "babel src/server/index.js src/server/**/*.js --out-dir dist --presets es2015",
-    "serve": "NODE_PATH=./dist node dist/src/server",
+    "serve": "node dist/src/server",
     "start": "npm run build npm run dist && npm run serve"
   },
   "keywords": [],

@@ -1,3 +1,5 @@
-import header from './header'
-import nav from './nav'
-import projects from './projects'
+import './header'
+import './nav'
+import './projects'
+import './skills'
+import './educations'
