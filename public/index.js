@@ -12631,7 +12631,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var $skills = (0, _jquery2.default)('.Skills-list');
 
-var skills = [{ name: 'HTML5', level: 100 }, { name: 'CCS3', level: 100 }, { name: 'Responsive Design', level: 80 }, { name: 'Jade', level: 90 }, { name: 'Stylus', level: 90 }, { name: 'Sass', level: 90 }, { name: 'JavaScript', level: 90 }, { name: 'ReactJS', level: 80 }, { name: 'Redux', level: 70 }, { name: 'AngularJS', level: 50 }, { name: 'Backbone', level: 50 }, { name: 'NodeJS', level: 80 }, { name: 'MongoDB', level: 80 }, { name: 'Browserify', level: 90 }, { name: 'Babel', level: 90 }, { name: 'Java', level: 50 }];
+var skills = [{ name: 'HTML5', level: 100 }, { name: 'CCS3', level: 100 }, { name: 'Responsive Design', level: 80 }, { name: git, level: 80 }, { name: 'Jade', level: 90 }, { name: 'Stylus', level: 90 }, { name: 'Sass', level: 90 }, { name: 'JavaScript', level: 90 }, { name: 'ReactJS', level: 80 }, { name: 'Redux', level: 80 }, { name: 'AngularJS', level: 50 }, { name: 'Backbone', level: 50 }, { name: 'NodeJS', level: 80 }, { name: 'MongoDB', level: 80 }, { name: 'Browserify', level: 90 }, { name: 'Babel', level: 90 }, { name: 'Java', level: 50 }];
 
 var colors = {
   green: '#02d610',
